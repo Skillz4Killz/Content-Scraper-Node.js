@@ -9,6 +9,9 @@ scrape({
 	urls: [{'http://shirts4mike.com/', filename: index.html},
 			{'http://shirts4mike.com/shirts.php', filename: shirts.html}],
 	directory: './data/',
+	sources:[
+				{selector: 'img', attr: 'src'}
+			]
 }).then((result) => {
     /* some code here */
 }).catch((err) => {
