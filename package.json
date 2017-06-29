@@ -1,0 +1,27 @@
+{
+  "name": "content-scraper-node",
+  "version": "1.0.0",
+  "description": "Node.js command line application that goes to an ecommerce site to get the latest prices and save them to a spreadsheet (CSV format) and write the application as if the spreadsheet will be used by another application to populate a database.",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skillz4Killz/Content-Scraper-Node.js.git"
+  },
+  "keywords": [
+    "scraper",
+    "shirts4mike",
+    "skillz4killz"
+  ],
+  "author": "Skillz4Killz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Skillz4Killz/Content-Scraper-Node.js/issues"
+  },
+  "homepage": "https://github.com/Skillz4Killz/Content-Scraper-Node.js#readme",
+  "dependencies": {
+    "website-scraper": "^3.1.0"
+  }
+}
