@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Skillz4Killz/Content-Scraper-Node.js#readme",
   "dependencies": {
     "cheerio-req": "^1.1.4",
+    "json-csv": "^1.5.0",
     "scrape-it": "^3.3.2",
     "tiny-req": "^0.1.1"
   }
