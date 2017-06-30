@@ -13,6 +13,7 @@ let date = new Date();
 let pages = [];
 let page1, page2, page3, page4, page5, page6, page7, page8;
 let shirtInfo = [];
+let makeCsv = [];
  
 // Promise interface to scrape the links for each shirt and create urls for each 
 scrapeIt(url, {
@@ -57,40 +58,39 @@ scrapeIt(url, {
 				shirtInfo.url = element;
 				shirtInfo.image = `${urlMain}${shirtInfo.image}`;
 				shirtInfo.time = new Date();
+				makeCsv.push(shirtInfo);
+					console.log(makeCsv);
 				
-				shirtInfo = [shirtInfo];
-
-console.log(shirtInfo);
 
 			var options = {
-  fields : [
-		{
-        name : 'title',
-        label : 'Title',
-    },
-    {
-        name : 'price',
-        label : 'Price'
-    },
-    {
-        name : 'image',
-        label : 'ImageURL'
-    },
-    {
-        name : 'url',
-        label : 'URL'
-    },
-    {
-        name : 'time',
-        label : 'Time'
-    }]
-  }
+						  fields : [
+								{
+						        name : 'title',
+						        label : 'Title',
+						    },
+						    {
+						        name : 'price',
+						        label : 'Price'
+						    },
+						    {
+						        name : 'image',
+						        label : 'ImageURL'
+						    },
+						    {
+						        name : 'url',
+						        label : 'URL'
+						    },
+						    {
+						        name : 'time',
+						        label : 'Time'
+						    }]
+						  }
 
-var out = fs.createWriteStream(`${date.getFullYear().toString()}-${(date.getMonth()+1).toString()}-${date.getDate().toString()}.csv`, {encoding: 'utf8'})
-var readable = es.readArray(shirtInfo)
-readable
-  .pipe(jsoncsv.csv(options))
-  .pipe(out)
+						var out = fs.createWriteStream(`${date.getFullYear().toString()}-${(date.getMonth()+1).toString()}-${date.getDate().toString()}.csv`, {encoding: 'utf8'})
+						var readable = es.readArray(makeCsv)
+						readable
+						  .pipe(jsoncsv.csv(options))
+						  .pipe(out)
 
 
 		});
