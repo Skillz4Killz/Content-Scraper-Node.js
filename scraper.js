@@ -1,8 +1,6 @@
 // http://shirts4mike.com/          http://shirts4mike.com/shirts.php
 'use strict';
 
-const cheerio = require("cheerio");
-const tinyreq = require("tinyreq");
 const scrapeIt = require("scrape-it");
 const jsoncsv = require('json-csv');
 const fs = require("fs");
@@ -16,6 +14,7 @@ let shirtInfo = [];
 let makeCsv = [];
  
 // Promise interface to scrape the links for each shirt and create urls for each 
+function beginScrape () {
 scrapeIt(url, {
 	pageLinks: {
         listItem: ".products li",
@@ -41,64 +40,70 @@ scrapeIt(url, {
 	page8 = `${urlMain}${pages[7]}`;
 	pages = [page1, page2, page3, page4, page5, page6, page7, page8];
 
-		pages.forEach(function(element){
-			scrapeIt(element, {
-				title: {
-		      selector: "title"
+	pages.forEach(function(element){
+		scrapeIt(element, {
+			title: {
+	      selector: "title"
+	    },
+	    price: {
+		      selector: ".price"
 		    },
-		    price: {
-			      selector: ".price"
-			    },
-		    image: {
-		      selector: "img",
-		      attr: "src"
-		  	},
-			}).then(data => { 
-				shirtInfo = data;
-				shirtInfo.url = element;
-				shirtInfo.image = `${urlMain}${shirtInfo.image}`;
-				shirtInfo.time = new Date();
-				makeCsv.push(shirtInfo);
-					console.log(makeCsv);
-				
+	    image: {
+	      selector: "img",
+	      attr: "src"
+	  	},
+		}).then(data => { 
+			shirtInfo = data;
+			shirtInfo.url = element;
+			shirtInfo.image = `${urlMain}${shirtInfo.image}`;
+			shirtInfo.time = new Date();
+			makeCsv.push(shirtInfo);
+				console.log(makeCsv);
+			
 
-			var options = {
-						  fields : [
-								{
-						        name : 'title',
-						        label : 'Title',
-						    },
-						    {
-						        name : 'price',
-						        label : 'Price'
-						    },
-						    {
-						        name : 'image',
-						        label : 'ImageURL'
-						    },
-						    {
-						        name : 'url',
-						        label : 'URL'
-						    },
-						    {
-						        name : 'time',
-						        label : 'Time'
-						    }]
-						  }
+		var options = {
+					  fields : [
+							{
+					        name : 'title',
+					        label : 'Title',
+					    },
+					    {
+					        name : 'price',
+					        label : 'Price'
+					    },
+					    {
+					        name : 'image',
+					        label : 'ImageURL'
+					    },
+					    {
+					        name : 'url',
+					        label : 'URL'
+					    },
+					    {
+					        name : 'time',
+					        label : 'Time'
+					    }]
+					  }
 
-						var out = fs.createWriteStream(`${date.getFullYear().toString()}-${(date.getMonth()+1).toString()}-${date.getDate().toString()}.csv`, {encoding: 'utf8'})
-						var readable = es.readArray(makeCsv)
-						readable
-						  .pipe(jsoncsv.csv(options))
-						  .pipe(out)
-
-
+					var out = fs.createWriteStream(`data/${date.getFullYear().toString()}-${(date.getMonth()+1).toString()}-${date.getDate().toString()}.csv`, {encoding: 'utf8'})
+					var readable = es.readArray(makeCsv)
+					readable
+					  .pipe(jsoncsv.csv(options))
+					  .pipe(out)
 		});
 	})
 });
-
-
-
+}
 			
+fs.open('./data', 'wx', (err, fd) => {
+  if (err) {
+    if (err.code === 'ENOENT') {
+      fs.mkdir('./data');
+      return;
+    }
+  }
+
+  beginScrape();
+});
 
  
