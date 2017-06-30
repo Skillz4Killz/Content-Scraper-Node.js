@@ -4,7 +4,8 @@
   "description": "Node.js command line application that goes to an ecommerce site to get the latest prices and save them to a spreadsheet (CSV format) and write the application as if the spreadsheet will be used by another application to populate a database.",
   "main": "scraper.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node scraper.js"
   },
   "repository": {
     "type": "git",
